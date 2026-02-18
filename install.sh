@@ -1,12 +1,24 @@
 #!/bin/bash
 
+# ==========================================
+# ARCH LINUX SETUP SCRIPT (AUDIO + RICE)
+# ==========================================
+
 # --- 1. System Update & Basis-Pakete ---
 echo "Update System und installiere Basis-Pakete..."
-sudo pacman -Syu --noconfirm --needed hyprland kitty git base-devel linux-headers ly firefox ttf-liberation wl-clipboard pavucontrol sof-firmware btop openssh
+sudo pacman -Syu --noconfirm --needed hyprland kitty git base-devel linux-headers ly firefox ttf-liberation wl-clipboard pavucontrol sof-firmware btop openssh less
 
+# Neovim & Dev Tools
 sudo pacman -Syu --noconfirm --needed neovim lua luarocks dotnet-sdk dotnet-runtime aspnet-runtime unzip ripgrep fd ttf-jetbrains-mono-nerd
 
+# Ricing Tools (Starship, Zsh, Fastfetch)
 sudo pacman -Syu --noconfirm --needed starship zsh fastfetch
+
+# Shell auf Zsh ändern
+if [ "$SHELL" != "/usr/bin/zsh" ]; then
+    echo "Ändere Standard-Shell zu Zsh..."
+    chsh -s /usr/bin/zsh
+fi
 
 # --- 2. Yay Installation ---
 if ! command -v yay &> /dev/null; then
@@ -25,30 +37,23 @@ echo ""
 echo "--- AUDIO SETUP ---"
 
 # SCHRITT A: Konflikte einzeln und aggressiv entfernen
-# Wir prüfen jedes Paket einzeln. Wenn eines nicht da ist, macht das nichts.
-# jack2 muss weg, damit pipewire-jack Platz hat.
 CONFLICT_PKGS=("jack2" "jack" "pulseaudio" "pulseaudio-alsa" "pipewire-media-session" "cadence")
 
 echo "Prüfe auf Konflikt-Pakete..."
 for pkg in "${CONFLICT_PKGS[@]}"; do
     if pacman -Qs "^$pkg$" > /dev/null; then
         echo "Entferne $pkg..."
-        # -Rdd entfernt ohne Rücksicht auf Abhängigkeiten (wichtig hier!)
-        sudo pacman -Rdd --noconfirm "$pkg" 2>/dev/null || echo "Konnte $pkg nicht entfernen (vielleicht schon weg)."
+        sudo pacman -Rdd --noconfirm "$pkg" 2>/dev/null || echo "Konnte $pkg nicht entfernen."
     fi
 done
 
 # SCHRITT B: Neuinstallation
 echo "Installiere PipeWire und WirePlumber..."
-# Sollte jetzt ohne Fragen durchlaufen
 sudo pacman -S --noconfirm pipewire pipewire-audio pipewire-alsa pipewire-pulse pipewire-jack wireplumber alsa-utils
 
 # SCHRITT C: Dienste aktivieren
 echo "Aktiviere Audio-Dienste für den Benutzer..."
-# Laufende Instanzen stoppen
 systemctl --user stop pipewire pipewire-pulse wireplumber 2>/dev/null
-
-# Systemd neu laden und Dienste aktivieren
 systemctl --user daemon-reload
 systemctl --user enable --now pipewire
 systemctl --user enable --now pipewire-pulse
@@ -64,14 +69,12 @@ response_focusrite=${response_focusrite,,}
 
 if [[ "$response_focusrite" =~ ^(yes|y)$ ]]; then
     echo "Installiere Focusrite Tools..."
-    
     yay -S --noconfirm alsa-scarlett-gui
     yay -S --noconfirm realtime-privileges
     
     sudo usermod -aG realtime $USER
     echo "Benutzer '$USER' wurde zur 'realtime' Gruppe hinzugefügt."
 
-    # WirePlumber Config für Focusrite Priorität
     echo "Setze Focusrite als Standard-Audio..."
     mkdir -p "$HOME/.config/wireplumber/wireplumber.conf.d"
     cat <<EOF > "$HOME/.config/wireplumber/wireplumber.conf.d/51-focusrite-default.conf"
@@ -130,7 +133,122 @@ if [[ "$response_steam" =~ ^(yes|y)$ ]]; then
     fi
 fi
 
-# --- 6. Ly Service aktivieren ---
+# --- 6. Ricing Setup (Kitty, Starship, Zsh) ---
+echo ""
+echo "--- RICING SETUP (Kitty, Starship, Fastfetch) ---"
+
+# A. Kitty Config erstellen
+echo "Konfiguriere Kitty..."
+mkdir -p "$HOME/.config/kitty"
+cat <<EOF > "$HOME/.config/kitty/kitty.conf"
+# --- FONT ---
+font_family      JetBrainsMono Nerd Font
+bold_font        auto
+italic_font      auto
+bold_italic_font auto
+font_size        11.0
+
+# --- WINDOW ---
+background_opacity 0.85
+window_padding_width 15
+confirm_os_window_close 0
+hide_window_decorations yes
+
+# --- LINUX SPECIFIC ---
+linux_display_server auto
+spawn_strategy       reused
+
+# --- KEYMAPS ---
+map ctrl+shift+c copy_to_clipboard
+map ctrl+shift+v paste_from_clipboard
+EOF
+
+# B. Starship Config erstellen (Arch Style)
+echo "Konfiguriere Starship..."
+mkdir -p "$HOME/.config"
+cat <<EOF > "$HOME/.config/starship.toml"
+add_newline = true
+
+[format]
+append_string = """
+\$os\\
+\$directory\\
+\$git_branch\\
+\$git_status\\
+\$lua\\
+\$dotnet\\
+\$character"""
+
+[os]
+disabled = false
+style = "bold blue"
+
+[os.symbols]
+Arch = "󰣇 "
+
+[directory]
+style = "bold cyan"
+read_only = " 󰌾"
+truncation_length = 3
+truncation_symbol = "…/"
+
+[git_branch]
+symbol = " "
+style = "bold purple"
+
+[lua]
+symbol = " "
+style = "bold blue"
+format = "via [\$symbol(\$version )](\$style)"
+
+[dotnet]
+symbol = "󰪮 "
+style = "bold green"
+format = "via [\$symbol(\$version )](\$style)"
+
+[character]
+success_symbol = "[➜](bold green) "
+error_symbol = "[➜](bold red) "
+vicmd_symbol = "[➜](bold yellow) "
+EOF
+
+# C. Zsh Config mit Fastfetch Auto-Start
+echo "Konfiguriere .zshrc..."
+# Backup erstellen falls vorhanden
+[ -f "$HOME/.zshrc" ] && cp "$HOME/.zshrc" "$HOME/.zshrc.backup"
+
+cat <<EOF > "$HOME/.zshrc"
+# Enable Powerlevel10k instant prompt (falls installiert, hier optional)
+# if [[ -r "\${XDG_CACHE_HOME:-\$HOME/.cache}/p10k-instant-prompt-\${(%):-%n}.zsh" ]]; then
+#   source "\${XDG_CACHE_HOME:-\$HOME/.cache}/p10k-instant-prompt-\${(%):-%n}.zsh"
+# fi
+
+# --- HISTORY ---
+HISTFILE=~/.zsh_history
+HISTSIZE=10000
+SAVEHIST=10000
+setopt APPEND_HISTORY
+setopt SHARE_HISTORY
+
+# --- ALIASES ---
+alias update='sudo pacman -Syu'
+alias vim='nvim'
+alias ls='ls --color=auto'
+alias ll='ls -l'
+alias la='ls -la'
+alias grep='grep --color=auto'
+
+# --- STARSHIP INIT ---
+eval "\$(starship init zsh)"
+
+# --- AUTOSTART FASTFETCH ---
+# Nur ausführen wenn interaktiv
+if [[ -o interactive ]]; then
+    fastfetch
+fi
+EOF
+
+# --- 7. Ly Service aktivieren ---
 echo ""
 echo "Konfiguriere Display Manager (Ly)..."
 sudo systemctl disable getty@tty2.service 2>/dev/null
@@ -143,6 +261,6 @@ fi
 
 echo ""
 echo "-----------------------------------"
-echo "INSTALLATION ABGESCHLOSSEN!"
+echo "INSTALLATION & RICING ABGESCHLOSSEN!"
 echo "Bitte starte das System neu!"
 echo "-----------------------------------"
