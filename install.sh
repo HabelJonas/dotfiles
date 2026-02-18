@@ -2,7 +2,7 @@
 
 # --- 1. System Update & Basis-Pakete ---
 echo "Update System und installiere Basis-Pakete..."
-sudo pacman -Syu --noconfirm --needed hyprland kitty git base-devel linux-headers ly firefox ttf-liberation wl-clipboard pavucontrol sof-firmware btop 
+sudo pacman -Syu --noconfirm --needed hyprland kitty git base-devel linux-headers ly firefox ttf-liberation wl-clipboard pavucontrol sof-firmware btop openssh
 
 sudo pacman -Syu --noconfirm --needed neovim lua luarocks dotnet-sdk dotnet-runtime aspnet-runtime unzip ripgrep fd ttf-jetbrains-mono-nerd
 
