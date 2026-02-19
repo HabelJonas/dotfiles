@@ -1,0 +1,15 @@
+{"timestamp":68936,"category":"session_restore","name":"backup_can_be_loaded_session_file","extra":{"glean_timestamp":"1771530282786","path_key":"clean","can_load":"false","loadfail_reason":"File doesn't exist."}}
+{"timestamp":68940,"category":"session_restore","name":"backup_can_be_loaded_session_file","extra":{"loadfail_reason":"N/A","can_load":"true","path_key":"recovery","glean_timestamp":"1771530282790"}}
+{"timestamp":68940,"category":"session_restore","name":"backup_can_be_loaded_session_file","extra":{"can_load":"true","path_key":"recovery","glean_timestamp":"1771530282790","loadfail_reason":"N/A"}}
+{"timestamp":68940,"category":"session_restore","name":"shutdown_success_session_startup","extra":{"glean_timestamp":"1771530282790","shutdown_ok":"true","shutdown_reason":"final-state-write-incomplete"}}
+{"timestamp":69113,"category":"webcompatreporting","name":"reason_dropdown","extra":{"glean_timestamp":"1771530282963","setting":"required"}}
+{"timestamp":69222,"category":"nimbus_events","name":"startup_database_consistency","extra":{"total_store_count":"35","store_active_count":"27","trigger":"startup","primary":"database","glean_timestamp":"1771530283072","total_db_count":"35","db_active_count":"27"}}
+{"timestamp":69240,"category":"jsonfile","name":"load_autofillprofiles","extra":{"value":"error_notfounderror","glean_timestamp":"1771530283091"}}
+{"timestamp":69249,"category":"doh","name":"state_rollback","extra":{"value":"null","glean_timestamp":"1771530283099"}}
+{"timestamp":69290,"category":"extensions.data","name":"sync_usage_quotas","extra":{"items_over_quota":"0","items_count":"11","addon_id":"{762f9885-5a13-4abd-9c77-433dcd38b8fd}","total_size_bytes":"283","glean_timestamp":"1771530283140","backend":"rust"}}
+{"timestamp":69291,"category":"extensions.data","name":"sync_usage_quotas","extra":{"glean_timestamp":"1771530283141","backend":"rust","items_count":"10","addon_id":"sponsorBlocker@ajay.app","items_over_quota":"0","total_size_bytes":"1701"}}
+{"timestamp":69380,"category":"nimbus_events","name":"is_ready","extra":{"glean_timestamp":"1771530283230"}}
+{"timestamp":69402,"category":"containers","name":"container_profile_loaded","extra":{"glean_timestamp":"1771530283252","containers":"4"}}
+{"timestamp":69416,"category":"upgrade_dialog","name":"trigger_reason","extra":{"glean_timestamp":"1771530283266","value":"not-major"}}
+{"timestamp":74195,"category":"normandy","name":"expose_nimbus_experiment","extra":{"featureId":"newtabTrainhopAddon","value":"new-tab-14912026012151415-to-release-14703","branchSlug":"rollout","glean_timestamp":"1771530288045"}}
+{"timestamp":74195,"category":"nimbus_events","name":"exposure","extra":{"experiment":"new-tab-14912026012151415-to-release-14703","branch":"rollout","glean_timestamp":"1771530288045","feature_id":"newtabTrainhopAddon"}}

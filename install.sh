@@ -16,6 +16,9 @@ sudo pacman -Syu --noconfirm --needed neovim lua luarocks dotnet-sdk dotnet-runt
 # Ricing Tools (Nur Installation)
 sudo pacman -Syu --noconfirm --needed starship zsh fastfetch
 
+# Tools for working with latex in nvim
+sudo pacman -Syu --noconfirm --needed texlive-basic texlive-latexextra texlive-fontsrecommended texlive-bibtexextra texlive-binextra texlive-langgerman zathura zathura-pdf-mupdf texlab biber
+
 # Shell auf Zsh ändern
 if [ "$SHELL" != "/usr/bin/zsh" ]; then
     echo "Ändere Standard-Shell zu Zsh..."
