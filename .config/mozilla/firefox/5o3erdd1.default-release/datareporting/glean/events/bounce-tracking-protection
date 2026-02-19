@@ -1,2 +1,0 @@
-{"timestamp":3920694,"category":"bounce.tracking.protection","name":"purge_action","extra":{"bounce_time":"1771428926","success":"true","is_dry_run":"true","glean_timestamp":"1771513758777","site_host":"lazyvim.github.io","require_stateful_bounces":"false"},"execution_counter":2}
-{"timestamp":69440,"category":"glean","name":"restarted","extra":{"glean.startup.date":"2026-02-19T20:44+01:00","glean_timestamp":"1771530283290"},"execution_counter":3}
