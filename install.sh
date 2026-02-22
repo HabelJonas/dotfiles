@@ -8,16 +8,21 @@
 echo "Update System und installiere Basis-Pakete..."
 
 # Core & GUI Basics (inkl. Kitty)
-sudo pacman -Syu --noconfirm --needed hyprland kitty git base-devel linux-headers ly firefox ttf-liberation wl-clipboard pavucontrol sof-firmware btop openssh less
+sudo pacman -Syu --noconfirm --needed hyprland kitty git base-devel linux-headers ly firefox 
+
+sudo pacman -Syu --noconfirm --needed ttf-liberation wl-clipboard pavucontrol sof-firmware btop openssh less waybar 
 
 # Neovim & Dev Tools (inkl. Font für Icons)
-sudo pacman -Syu --noconfirm --needed neovim lua luarocks dotnet-sdk dotnet-runtime aspnet-runtime unzip ripgrep fd ttf-jetbrains-mono-nerd
+sudo pacman -Syu --noconfirm --needed neovim lua luarocks dotnet-sdk dotnet-runtime aspnet-runtime unzip ripgrep fd ttf-jetbrains-mono-nerd ttf-font-awesome otf-symbols-nerd fontconfig
 
 # Ricing Tools (Nur Installation)
-sudo pacman -Syu --noconfirm --needed starship zsh fastfetch
+sudo pacman -Syu --noconfirm --needed starship zsh fastfetch wofi xdg-utils
 
 # Tools for working with latex in nvim
 sudo pacman -Syu --noconfirm --needed texlive-basic texlive-latexextra texlive-fontsrecommended texlive-bibtexextra texlive-binextra texlive-langgerman zathura zathura-pdf-mupdf texlab biber
+
+# Installing the vpn
+sudo pacman -Syu --noconfirm --needed networkmanager proton-vpn-gtk-app
 
 # Shell auf Zsh ändern
 if [ "$SHELL" != "/usr/bin/zsh" ]; then
@@ -36,6 +41,9 @@ if ! command -v yay &> /dev/null; then
 else
     echo "yay ist bereits installiert."
 fi
+
+# Install android studio
+yay -S --noconfirm android-studio
 
 # --- 3. Audio Installation (FINALER FIX) ---
 echo ""
