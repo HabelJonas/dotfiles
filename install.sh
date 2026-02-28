@@ -21,6 +21,9 @@ sudo pacman -Syu --noconfirm --needed starship zsh fastfetch wofi xdg-utils
 # Tools for working with latex in nvim
 sudo pacman -Syu --noconfirm --needed texlive-basic texlive-latexextra texlive-fontsrecommended texlive-bibtexextra texlive-binextra texlive-langgerman zathura zathura-pdf-mupdf texlab biber
 
+# Installing the yazi file manager
+sudo pacman -Syu --noconfirm --needed yazi ffmpeg 7zip jq poppler fd ripgrep fzf zoxide resvg imagemagick
+
 # Installing the vpn
 sudo pacman -Syu --noconfirm --needed networkmanager proton-vpn-gtk-app
 
