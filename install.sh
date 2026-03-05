@@ -28,7 +28,7 @@ sudo pacman -Syu --noconfirm --needed yazi ffmpeg 7zip jq poppler fd ripgrep fzf
 sudo pacman -Syu --noconfirm --needed networkmanager proton-vpn-gtk-app
 
 # Installing keyd to map pagedown to rightalt
-sudo pacman -Syu --noconfigm --needed keyd
+sudo pacman -Syu --noconfirm --needed keyd npm
 
 # Installing nextcloud client and keepass..
 sudo pacman -Syu --noconfirm --needed nextcloud-client keepassxc
