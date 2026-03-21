@@ -31,7 +31,7 @@ sudo pacman -Syu --noconfirm --needed networkmanager proton-vpn-gtk-app
 sudo pacman -Syu --noconfirm --needed keyd npm
 
 # Installing nextcloud client and keepass..
-sudo pacman -Syu --noconfirm --needed nextcloud-client keepassxc
+sudo pacman -Syu --noconfirm --needed nextcloud-client keepassxc hyprshot libnotify hyprpicker
 
 # Shell auf Zsh ändern
 if [ "$SHELL" != "/usr/bin/zsh" ]; then
