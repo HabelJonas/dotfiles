@@ -13,7 +13,7 @@ sudo pacman -Syu --noconfirm --needed hyprland kitty git base-devel linux-header
 sudo pacman -Syu --noconfirm --needed ttf-liberation wl-clipboard pavucontrol sof-firmware btop openssh less waybar 
 
 # Neovim & Dev Tools (inkl. Font für Icons)
-sudo pacman -Syu --noconfirm --needed neovim lua luarocks dotnet-sdk dotnet-runtime aspnet-runtime unzip ripgrep fd ttf-jetbrains-mono-nerd ttf-font-awesome otf-symbols-nerd fontconfig
+sudo pacman -Syu --noconfirm --needed neovim lua luarocks dotnet-sdk dotnet-runtime aspnet-runtime unzip ripgrep fd ttf-jetbrains-mono-nerd ttf-font-awesome otf-symbols-nerd fontconfig tree-sitter
 
 # Ricing Tools (Nur Installation)
 sudo pacman -Syu --noconfirm --needed starship zsh fastfetch wofi xdg-utils
@@ -32,6 +32,9 @@ sudo pacman -Syu --noconfirm --needed keyd npm
 
 # Installing nextcloud client and keepass..
 sudo pacman -Syu --noconfirm --needed nextcloud-client keepassxc hyprshot libnotify hyprpicker
+
+# Installing everything needed for python development
+sudo pacman -Syu --noconfirm --needed python python-pynvim ruff python-debugpy pyright mermaid-cli
 
 # Shell auf Zsh ändern
 if [ "$SHELL" != "/usr/bin/zsh" ]; then
