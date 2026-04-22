@@ -36,6 +36,10 @@ sudo pacman -Syu --noconfirm --needed nextcloud-client keepassxc hyprshot libnot
 # Installing everything needed for python development
 sudo pacman -Syu --noconfirm --needed python python-pynvim ruff python-debugpy pyright mermaid-cli
 
+# Installing bluetooth stuff
+sudo pacman -Syu --noconfirm --needed bluez bluez-utils
+sudo systemctl enable --now bluetooth.service
+
 # Shell auf Zsh ändern
 if [ "$SHELL" != "/usr/bin/zsh" ]; then
     echo "Ändere Standard-Shell zu Zsh..."
