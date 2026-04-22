@@ -61,6 +61,9 @@ fi
 # Install android studio
 yay -S --noconfirm android-studio
 
+# Install zotero
+yay -S --noconfirm zotero-bin
+
 # --- 3. Audio Installation (FINALER FIX) ---
 echo ""
 echo "--- AUDIO SETUP ---"
